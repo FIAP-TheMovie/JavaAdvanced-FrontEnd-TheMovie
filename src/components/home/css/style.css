@@ -1,0 +1,8 @@
+.content-visao-geral{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 21px;
+    gap: 20px;
+}

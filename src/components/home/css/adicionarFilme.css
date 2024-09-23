@@ -1,0 +1,11 @@
+.button-adc-filme{
+    height: 44px;
+    background-color: #161616;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: #FFFFFF;
+}
+
+.button-adc-filme:hover{
+    background-color: #313131;
+}

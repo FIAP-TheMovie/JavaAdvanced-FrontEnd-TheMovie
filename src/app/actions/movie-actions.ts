@@ -4,18 +4,20 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-export async function createMovie(prevState: any, formData: FormData) {
+export async function createMovie(userId: number, prevState: any, formData: FormData) {
 
     const movie = {
         name: formData.get('name'),
         description: formData.get('description'),
         actor: formData.get('actor'),
+        user_id: userId,
     }
 
     const response = await fetch('http://localhost:8080/movies', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookies().get('token')?.value}`
         },
         body: JSON.stringify(movie),
     })
@@ -23,6 +25,7 @@ export async function createMovie(prevState: any, formData: FormData) {
     if (!response.ok) {
         return {
             success: false,
+            message: 'Erro ao criar o filme.' + response.status,
             name: movie.name,
             description: movie.description,
             actor: movie.actor,
@@ -31,9 +34,10 @@ export async function createMovie(prevState: any, formData: FormData) {
 
     return {
         success: true,
-        name: '',
-        description: '',
-        actor: '',
+        message: 'Filme criado com sucesso.',
+        name: movie.name,
+        description: movie.description,
+        actor: movie.actor,
     }
 
 }
@@ -54,19 +58,19 @@ export async function uploadPhoto(formData: FormData) {
     if(!response.ok) {
         return {
             success: false,
+            message: 'Ocorreu um erro ao publicar a imagem' + response.status,
         }
     }
 
     return {
         success: true,
+        message: '',
     }
 }
 
 export async function searchMovies(name: string) {
-    const response = await fetch(`http://localhost:8080/movies?name=${name}`, {
-        headers: {
-            "Authorization": `Bearer ${cookies().get('token')?.value}`
-        }
+    const response = await fetch(`http://localhost:8080/movies?${name}`, {
+        cache: 'no-store'
     })
 
     if (response.status === 403) {
@@ -82,35 +86,34 @@ export async function searchMovies(name: string) {
     }))
 }
 
-export async function getMovie(id: number) {
-    const response = await fetch(`http://localhost:8080/movies?id=${id}`, {
-        headers: {
-            'Authorization': `Bearer ${cookies().get('token')?.value}`
-        }
+export async function getMovie(id: string) {
+    const response = await fetch(`http://localhost:8080/movies?${id}`, {
+        cache: 'no-store'
     })
-
-    if (response.status === 403) {
-        redirect('/')
-    }
     
-    const json = await response.json()
-    return {
-        name: json.name,
-        description: json.description,
-        actor: json.actor,
-        photo: json.photo,
-    }
+    const movie = await response.json()
+    return movie
 }
 
-export async function updateMovie(prevState: any, formData: FormData) {
+export async function getMovies() {
+    const response = await fetch(`http://localhost:8080/movies`, {
+        cache: 'no-store'
+    })
+
+    const movie = await response.json()
+    return movie
+}
+
+export async function updateMovie(prevState: any, id: number, formData: FormData) {
 
     const movie = {
         name: formData.get('name'),
         description: formData.get('description'),
         actor: formData.get('actor'),
+        photo: formData.get('photo'),
     }
 
-    const response = await fetch('http://localhost:8080/movies', {
+    const response = await fetch(`http://localhost:8080/movies/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -130,6 +133,7 @@ export async function updateMovie(prevState: any, formData: FormData) {
             name: json.find((error: any) => error.field === 'name')?.message,
             description: json.find((error: any) => error.field === 'description')?.message,
             actor: json.find((error: any) => error.field === 'actor')?.message,
+            photo: json.find((error: any) => error.field === 'photo')?.message,
         }
     }
 
@@ -138,5 +142,36 @@ export async function updateMovie(prevState: any, formData: FormData) {
         name: '',
         description: '',
         actor: '',
+        photo: '',
+    }
+}
+
+export async function deleteMovie(id: number) {
+    const response = await fetch(`http://localhost:8080/movies/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${cookies().get('token')?.value}`
+        }
+    })
+    
+    if (!response.ok) {
+        const json = await response.json()
+        return {
+            success: false,
+            name: json.name,
+            description: json.description,
+            actor: json.actor,
+            photo: json.photo,
+            user_id: json.user_id,
+        }
+    }
+
+    return {
+        success: true,
+        name: '',
+        description: '',
+        actor: '',
+        photo: '',
+        user_id: '',
     }
 }

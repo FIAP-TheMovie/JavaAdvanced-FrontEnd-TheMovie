@@ -1,27 +1,38 @@
-export function AllMovies(){
+
+
+
+import { getMovies } from "@/app/actions/movie-actions";
+import Image from "next/image";
+import Link from "next/link";
+
+export async function AllMovies(){
+
+    let movies = [];
+    try {
+        movies = await getMovies();
+    } catch (error) {
+        console.error("Ocorreu um erro ao buscar os filmes:", error);
+    }
+
+    if (!Array.isArray(movies)) {
+        return <p>Não há filmes disponíveis no momento!</p>;
+    }
+
+    if (movies.length === 0) {
+        return <p>Não há filmes disponíveis no momento!</p>;
+    }
+
     return (
-        <div className="all-movies">
-            <h1>Lista de Filmes</h1>
-            <div className="movie">
-                <h2>Nome do Filme</h2>
-                <p>Descrição do Filme</p>
-            </div>
-            <div className="movie">
-                <h2>Nome do Filme</h2>
-                <p>Descrição do Filme</p>
-            </div>
-            <div className="movie">
-                <h2>Nome do Filme</h2>
-                <p>Descrição do Filme</p>
-            </div>
-            <div className="movie">
-                <h2>Nome do Filme</h2>
-                <p>Descrição do Filme</p>
-            </div>
-            <div className="movie">
-                <h2>Nome do Filme</h2>
-                <p>Descrição do Filme</p>
-            </div>
+        <div className="card-movie">
+            {movies.map((movie: Movie) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
+                    <Link href={"/movies/" + movie.id} className="card-box">
+                    <Image src={movie.photo} alt="Naruto" width={280} height={350} className="card-image"/>
+                        <h2>{movie.name}</h2>
+                    </Link>
+                </div>
+            ))}
+            
         </div>
     )
 }

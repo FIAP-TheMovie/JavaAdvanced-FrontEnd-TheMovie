@@ -41,41 +41,6 @@ export async function createUser(prevState: any, formData: FormData) {
 
 }
 
-export async function login(prevState: any, formData: FormData) {
-
-    const user = {
-        email: formData.get('email'),
-        password: formData.get('password'),
-    }
-
-    const response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-    })
-
-    if (!response.ok) {
-        return {
-            message: "Acesso negado"
-        }
-    } 
-
-    const data = await response.json()
-    cookies().set('token', data.token)
-    cookies().set('email', data.email)
-
-    redirect('/feed') // Verificar o que é no Back-End
-
-    return {
-        success: true,
-        email: '',
-        password: '',
-    }
-
-}
-
 export async function getUserProfile() {
     const response = await fetch('http://localhost:8080/users/profile', {
         headers: {
@@ -137,7 +102,52 @@ export async function updateUser(prevState: any, formData: FormData) {
     }
 }
 
+export async function login(prevState: any, formData: FormData) {
+
+    const credentials = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+    }
+
+    const response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+        cache: 'no-store'
+    })
+
+    if (!response.ok) {
+        return {
+            message: 'Falha no login. ' + response.status,
+            success: false,
+            email: formData.get('email')
+        }
+    } 
+
+    const json = await response.json()
+    const token = json.token
+    const email = json.email
+
+    cookies().set('token', token)
+    cookies().set('email', email)
+
+    redirect('/')
+
+    return {
+        success: true,
+        id: json.id,
+        name: formData.get('name'),
+        surname: formData.get('surname'),
+        email: formData.get('email'),
+        user_id: json.user_id,
+    }
+
+}
+
 export async function logout() {
     cookies().delete("token")
+    cookies().delete("email")
     redirect('/')
 }

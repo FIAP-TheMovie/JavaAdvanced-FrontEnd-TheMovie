@@ -1,4 +1,4 @@
-import "./css/adicionarFilme.css"
+import "./css/adicionarMovie.css"
 import { Button } from "@/components/ui/button";
 
 export function AdicionarMovie(){

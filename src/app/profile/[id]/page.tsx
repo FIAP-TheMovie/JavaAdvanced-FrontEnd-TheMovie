@@ -22,7 +22,6 @@ interface User{
     password: string;
 }
 
-
 export default function Profile({ params }: { params: { id: number } }) {
     const router = useRouter();
     const authContext = useContext(AuthContext);
@@ -68,10 +67,10 @@ export default function Profile({ params }: { params: { id: number } }) {
 
         const result = await updateUser(user.id, formData);
         if (result.success) {
-            setSuccessMessage("Usuário atualizado com sucesso!");
-            setError(null);
+            setSuccessMessage(result.message);
+            setError(result.message);
         } else {
-            setError("Mensagem não definida");
+            setError(result.message);
         }
     };
 
@@ -84,7 +83,7 @@ export default function Profile({ params }: { params: { id: number } }) {
                 setUser(null);
                 router.push("/");
             } else {
-                setError("Mensagem não definida");
+                setError(result.message || "Mensagem não definida");
             }
         } catch (error) {
             console.error("Failed to delete user:", error);
@@ -99,6 +98,8 @@ export default function Profile({ params }: { params: { id: number } }) {
                     <Voltar />
                 </Header>
                 <section>
+                    {successMessage && <div className="success-message">{successMessage}</div>}
+                    {error && <div className="error-message">{error}</div>}
                     <form className="form-profile" onSubmit={handleUpdate}>
                         <Input type="hidden" name="id" value={user?.id} />
                         <Input type="text" name="name" placeholder="Nome" value={user?.name || ''} onChange={handleChange} required className="inputBox focus-visible:ring-0" />

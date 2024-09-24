@@ -19,7 +19,10 @@ export default function ButtonsContent() {
                     <AdicionarMovie />
                 </>
             ) : (
-                <Search />
+                <>
+                    <Search />
+                    <AdicionarMovie />
+                </>
             )}
         </div>
     )

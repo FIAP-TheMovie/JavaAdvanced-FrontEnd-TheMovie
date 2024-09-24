@@ -6,21 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
-import { useFormState } from "react-dom";
 import { createUser } from "../actions/user-actions";
 import { useRouter } from "next/navigation";
 
-const initialState = {
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    success: false,
-    message: "",
-}
-
 export default function SignUp() {
-    const [state, formAction] = useFormState(createUser, initialState);
     const router = useRouter()
 
     const handleCreate = async (e) => {

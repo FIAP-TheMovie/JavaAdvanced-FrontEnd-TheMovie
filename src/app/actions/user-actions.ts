@@ -10,6 +10,7 @@ export async function login(prevState: any, formData: FormData) {
         id: formData.get('id'),
         email: formData.get('email'),
         password: formData.get('password'),
+        message: '',
     }
 
     try{
@@ -24,9 +25,9 @@ export async function login(prevState: any, formData: FormData) {
     
         if (!response.ok) {
             return {
-                message: 'Falha no login. ' + response.status,
                 success: false,
                 email: credentials.email,
+                message: 'Erro ao fazer login. ' + response.status,
             }
         } 
     
@@ -42,10 +43,11 @@ export async function login(prevState: any, formData: FormData) {
             name: json.name,
             surname: json.surname,
             email: json.email,
+            message: 'Login efetuado com sucesso.',
         }
     } catch (error) {
         return {
-            message: 'Erro na conexão: ' + error.message,
+            message: 'Erro na conexão: ' + error,
             success: false,
         };
     }
@@ -67,6 +69,7 @@ export async function createUser(prevState: any, formData: FormData) {
         surname: formData.get('surname'),
         email: formData.get('email'),
         password: formData.get('password'),
+        message: '',
     }
 
     const response = await fetch('http://localhost:8080/users', {
@@ -85,6 +88,7 @@ export async function createUser(prevState: any, formData: FormData) {
             surname: user.surname,
             email: user.email,
             password: user.password,
+            message: 'Erro ao criar usuário. ' + response.status,
         }
     } 
 
@@ -95,6 +99,7 @@ export async function createUser(prevState: any, formData: FormData) {
         surname: '',
         email: '',
         password: '',
+        message: 'Usuário criado com sucesso.',
     }
 
 }
@@ -103,7 +108,7 @@ export async function getUser(id: number) {
     const token = cookies().get('token')?.value;
 
     if (!token) {
-        return null; // Retorna null se não houver token
+        return null;
     }
 
     const response = await fetch(`http://localhost:8080/users/${id}`, {
@@ -116,16 +121,11 @@ export async function getUser(id: number) {
         redirect('/')
     }
     
-    const json = await response.json()
-    return {
-        id: json.id,
-        name: json.name,
-        surname: json.surname,
-        email: json.email,
-    }
+    const user = await response.json()
+    return user
 }
 
-export async function updateUser(prevState: any, formData: FormData) {
+export async function updateUser(id: number, formData: FormData) {
 
     const user = {
         id: formData.get('id'),
@@ -133,6 +133,7 @@ export async function updateUser(prevState: any, formData: FormData) {
         surname: formData.get('surname'),
         email: formData.get('email'),
         password: formData.get('password'),
+        message: '',
     }
 
     const response = await fetch(`http://localhost:8080/users/${id}`, {
@@ -156,7 +157,8 @@ export async function updateUser(prevState: any, formData: FormData) {
             name: json.find((error: any) => error.field === 'name')?.message,
             surname: json.find((error: any) => error.field === 'surname')?.message,
             email: json.find((error: any) => error.field === 'email')?.message,
-            password: json.find((error: any) => error.field === 'password')?.message
+            password: json.find((error: any) => error.field === 'password')?.message,
+            message: 'Erro ao atualizar usuário. ' + response.status,
         }
     }
 
@@ -167,6 +169,7 @@ export async function updateUser(prevState: any, formData: FormData) {
         surname: '',
         email: '',
         password: '',
+        message: 'Usuário atualizado com sucesso.',
     }
 }
 
@@ -187,6 +190,7 @@ export async function deleteUser(id: number) {
             surname: json.surname,
             email: json.email,
             password: json.password,
+            message: 'Erro ao excluir usuário. ' + response.status,
         }
     }
 
@@ -197,5 +201,6 @@ export async function deleteUser(id: number) {
         surname: '',
         email: '',
         password: '',
+        message: 'Usuário excluído com sucesso.',
     }
 }

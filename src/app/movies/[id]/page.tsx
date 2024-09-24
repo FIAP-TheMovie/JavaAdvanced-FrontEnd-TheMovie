@@ -87,7 +87,7 @@ export default function Movies({ params }: { params: { id: number } }) {
                 }
             }
         } else {
-            setError(updateResult.message);
+            setError(updateResult.message || "Mensagem não definida");
         }
 
         const result = await updateMovie(movie.id, formData);

@@ -12,7 +12,7 @@ export function AdicionarMovie() {
 
     return (
         <>
-            <Link href={`/movies/${user.id}`} className="button-adc-filme">Adicionar Filme</Link>
+            <Link href={`/movies/cadastrar${user.id}`} className="button-adc-filme">Adicionar Filme</Link>
         </>
     )
 }

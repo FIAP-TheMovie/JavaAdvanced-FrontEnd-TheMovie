@@ -10,6 +10,16 @@
     }
 }
 
+.content-nav-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    gap: 20px;
+}
+
 .header-content {
     border-radius: 10px;
     width: 100%;
@@ -31,4 +41,13 @@
     align-items: center;
     list-style: none;
     gap: 50px;
+}
+
+.buttons-header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
 }

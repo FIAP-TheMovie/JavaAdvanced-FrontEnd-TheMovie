@@ -4,42 +4,53 @@ import "./css/style.css"
 
 import Link from "next/link";
 import Image from "next/image";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { useState } from "react";
+import { ReactNode, useContext } from "react";
+import { AuthContext } from "@/app/contexts/AuthContext";
+import { logout } from "@/app/actions/user-actions";
+import { useRouter } from "next/navigation";
 
-export function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+interface HeaderProps {
+    children?: ReactNode;
+}
 
-    const handleLogin = () => setIsLoggedIn(true);
-    const handleLogout = () => setIsLoggedIn(false);
+export function Header({ children }: HeaderProps) {
+    const authContext  = useContext(AuthContext);
+    const user = authContext?.user;
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        const result = await logout();
+        if (result.success) {
+            router.push("/");
+        }
+    }
 
     return (
-        <header className="header-content">
+        <div className="content-nav-header">
+            <header className="header-content">
                 <nav className="nav-content">
                     <Link href="/" className="link-a">
                         <Image src="/logo.svg" width={80} height={50} className="w-auto hidden lg:block" alt="Logo da Plataforma The Movie"/>
                     </Link>
-                    {isLoggedIn ? (
-                            <>
-                                <ul className="ul-content">
-                                    <Link href="/movies" className="link-a">Filmes</Link>
-                                    <Link href="/profile" className="link-a">Perfil</Link>
-                                    <Link href="/login" className="link-a" onClick={handleLogout}>Sair</Link>
-                                    <ModeToggle />
-                                </ul>
-                            </>
-                        ) : (
-                            <>
-                                <Link href="/" className="link-a">Filmes</Link>
-                                <ul className="ul-content">
-                                    <Link href="/login" className="link-a" onClick={handleLogin}>Login</Link>
-                                    <Link href="/signup" className="link-a">Sign-Up</Link>
-                                    <ModeToggle />
-                                </ul>
-                            </>
-                        )}
                     
+                    {user ? ( 
+                        <ul className="ul-content">
+                            <Link href="/" className="link-a">Filmes</Link>
+                            <Link href={`/profile/${user.id}`} className="link-a">Perfil</Link>
+                            <Link href="/" className="link-a" onClick={handleLogout}>Sair</Link>
+                        </ul>
+                    ) : (
+                        <ul className="ul-content">
+                            <Link href="/" className="link-a">Filmes</Link>
+                            <Link href="/signin" className="link-a">Login</Link>
+                            <Link href="/signup" className="link-a">Sign-Up</Link>
+                        </ul>
+                    )}
                 </nav>
-        </header>
+            </header>
+            <div className="buttons-header">
+                {children}
+            </div>
+        </div>
     )
 }

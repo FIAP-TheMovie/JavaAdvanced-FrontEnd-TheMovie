@@ -1,0 +1,26 @@
+footer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 20px;
+}
+
+.footerBox{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.footerBox:nth-child(2){
+    align-items: center;
+}
+
+.footerBox:nth-child(3){
+    align-items: flex-end;
+}

@@ -1,15 +1,21 @@
-import { Header } from "@/components/nav/header";
-import { VisaoGeral } from "@/components/home/visaoGeral";
-import "./css/style.css"
-// import { Footer } from "@/components/footer/footer";
+import { ReactNode } from "react";
+import { VisaoGeral } from "@/app/movies/visaoGeral";
 
-export default function Home() {
+import "./css/style.css"
+
+interface HomeProps {
+  children?: ReactNode;
+}
+
+export default function Home({ children }: HomeProps) {
   return (
     <main className="content-visao-geral">
-          <Header />
-          <VisaoGeral />
-          {/* <Footer /> */}
+          {children}
     </main>
 
   );
 }
+
+Home.defaultProps = {
+  children: <VisaoGeral />,
+};

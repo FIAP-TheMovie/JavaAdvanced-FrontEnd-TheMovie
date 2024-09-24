@@ -1,0 +1,98 @@
+.main-signup {
+    padding: 54px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.image-signup{
+    transition: all 0.6s;
+}
+
+.image-signup:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.content-signup {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+section {
+    width: 100%;
+    background-color: #161616;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 40px;
+    border-radius: 50px;
+    gap: 30px;
+}
+
+.textBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.title-signup{
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.paragraph-signup{
+    width: 80%;
+    font-size: 14px;
+}
+
+.form-signup{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.inputBox{
+    color: #fff;
+    height: 60px;
+    background-color: #676767;
+    padding: 10px 20px;
+    border: 0;
+}
+
+.inputBox::placeholder{
+    color: #A7A7A7;
+}
+
+.content-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.buttonBox{
+    height: 44px;
+    background-color: #FF0000;
+    color: white;
+    padding: 10px 15px;
+    transition: all 0.6s;
+}
+
+.buttonBox:hover{
+    background-color: #FF0000;
+    color: white;
+    transform: scale(1.1);
+}

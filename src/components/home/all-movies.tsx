@@ -1,9 +1,15 @@
-
-
-
 import { getMovies } from "@/app/actions/movie-actions";
 import Image from "next/image";
 import Link from "next/link";
+
+interface Movie {
+    id: number;
+    name: string;
+    description: string;
+    actors: string;
+    photo: string;
+    user_id: number;
+}
 
 export async function AllMovies(){
 
@@ -24,15 +30,18 @@ export async function AllMovies(){
 
     return (
         <div className="card-movie">
-            {movies.map((movie: Movie) => (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
-                    <Link href={"/movies/" + movie.id} className="card-box">
-                    <Image src={movie.photo} alt="Naruto" width={280} height={350} className="card-image"/>
-                        <h2>{movie.name}</h2>
-                    </Link>
-                </div>
-            ))}
-            
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
+                {movies.map((movie: Movie) => (
+                    <div className="boxMovie" key={movie.id}>
+                        <Link href={"/movies/" + movie.id} className="card-box">
+                            <div className="boxImageMovie">
+                                <Image src={movie.photo} alt={movie.name} width={280} height={350} className="card-image"/>
+                            </div>
+                            <h2>{movie.name}</h2>
+                        </Link>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

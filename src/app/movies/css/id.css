@@ -1,0 +1,110 @@
+section {
+    height: 100%;
+    width: 100%;
+    background-color: #161616;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 40px;
+    border-radius: 10px;
+    gap: 30px;
+}
+
+.form-movie {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.form-content{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.form-input {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.inputBox{
+    color: #fff;
+    height: 60px;
+    background-color: #676767;
+    padding: 10px 20px;
+    border: 0;
+}
+
+.inputBox::placeholder{
+    color: #A7A7A7;
+}
+
+.img-profile {
+    border-radius: 20px;
+}
+
+.content-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.buttonBox{
+    height: 44px;
+    background-color: #FF0000;
+    color: white;
+    padding: 10px 15px;
+    transition: all 0.6s;
+}
+
+.buttonBox:hover{
+    background-color: #FF0000;
+    color: white;
+    transform: scale(1.1);
+}
+
+.form-image {
+    position: relative; /* Define o contêiner como relativo */
+    display: inline-block; /* Para que o tamanho se ajuste à imagem */
+}
+
+.img-profile {
+    width: 100%; /* Certifique-se de que a imagem preencha o contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+.upload-icon {
+    position: absolute; /* Permite o posicionamento em relação ao contêiner pai */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta a posição para centralizar corretamente */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+
+    background-color: #fff;
+    gap: 10px;
+    border-radius: 50px;
+    padding: 10px;
+}
+
+.inputFile {
+    position: absolute; /* Permite o posicionamento em relação ao contêiner pai */
+    top: 0; /* Ajusta a posição do botão */
+    left: 0; /* Ajusta a posição do botão */
+    width: 100%; /* Para cobrir toda a área da imagem */
+    height: 100%; /* Para cobrir toda a área da imagem */
+    opacity: 0; /* Torna o botão invisível */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}

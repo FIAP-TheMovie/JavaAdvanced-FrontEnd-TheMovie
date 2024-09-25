@@ -1,13 +1,6 @@
 :root {
-    --backgroundHeader: #ffffff;
-    --foregroundHeader: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --backgroundHeader: #161616;
-        --foregroundHeader: #ededed;
-    }
+    --backgroundHeader: #161616;
+    --foregroundHeader: #ededed;
 }
 
 .content-nav-header {

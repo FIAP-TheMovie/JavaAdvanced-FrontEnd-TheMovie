@@ -152,15 +152,6 @@ export default function Movies({ params }: { params: { id: number } }) {
                 </section>
                 <Footer />
             </Home>
-            {
-                movie?.name && (
-                    <div className="movie">
-                        <h1>{movie.name}</h1>
-                        <p>{movie.description}</p>
-                        <p>{movie.actors}</p>
-                    </div>
-                )
-            }
         </>
     );
 }

@@ -4,7 +4,7 @@ import { Header } from "@/components/nav/header";
 import ButtonsContent from "@/components/buttons-content";
 import { Footer } from "@/components/footer/footer";
 
-import "@/app/movies/css/visaoGeral.css";
+import "./css/visaoGeral.css";
 
 
 export function VisaoGeral() {
